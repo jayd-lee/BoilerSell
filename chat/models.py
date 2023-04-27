@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from blog.views import Post
 User = get_user_model()
 
 # Create your models here.
