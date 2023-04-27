@@ -3,8 +3,6 @@ from channels.consumer import AsyncConsumer
 from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
 from django.apps import apps
-Thread = apps.get_model('chat', 'Thread')
-ChatMessage = apps.get_model('chat', 'ChatMessage')
 
 class ChatConsumer(AsyncConsumer):
     async def websocket_connect(self, event):
@@ -92,6 +90,8 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def get_thread(self, thread_id):
+        Thread = apps.get_model('chat', 'Thread')
+
         qs = Thread.objects.filter(id=thread_id)
         if qs.exists():
             obj = qs.first()
@@ -101,4 +101,6 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def create_chat_message(self, thread, user, msg):
+        ChatMessage = apps.get_model('chat', 'ChatMessage')
+
         ChatMessage.objects.create(thread=thread, user=user, message=msg)
