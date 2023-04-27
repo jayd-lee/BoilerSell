@@ -1,0 +1,513 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ object.title }} | details</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css'>
+<link rel="stylesheet" href="{% static 'blog/post.css' %}">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!-- about -->
+
+<!-- end about -->
+
+<div class="wrapper">
+        <nav>
+          <i onclick="history.go(-1)" class="fa fa-chevron-left" style= 'margin: 20px 0 0 30px ;color: white; font-size: 3vh;'></i>
+            <div class="mainLogo">hi</div>
+            <div class="menu">
+                <div class="menuLinks">
+                    <a href="" class="menuLink">About the Seller</a>
+                    <a href="" class="menuLink">Store</a>
+                    <a href="" class="menuLink">Contacts</a>
+                </div>
+
+                <div class="shoppingCart">
+                    <div class="shoppingIcon">
+                        <img src="https://rafaelalucas.com/dailyui/12/assets/shopping-cart.svg" alt="">
+                        <span class="itemNumber">1</span>
+                    </div>
+                    <div class="shoppingMenu">
+                        <p class="shoppingTitle">Message</p>
+                        <img src="{{object.author.profile.image.url}}" alt="" class="soldby shoppingThumb">
+                        <p style='padding-bottom: 40px'>@{{ object.author.username }}</p>
+                        
+                        <div class="productResume">
+                          
+
+                            <img src="{{photos.0.image.url}}" alt="" class="shoppingThumb">
+                            <article>
+                                <p class="shoppingProduct">{{ object.title }}</p>
+            
+                                
+                            </article>
+                        </div>
+                        <div class="shoppingBtn">
+                            <a class="link emptyCart"> <img src="https://rafaelalucas.com/dailyui/12/assets/trash.svg" alt=""> Nevermind</a>
+                            
+                            <form action="{% url 'messages' %}" method='post'>
+                              {% csrf_token %}
+                              <input type="hidden" name="author_id" value="{{ object.author.id }}">
+                              
+                              <button class="btn">Message Seller</button>
+                            </form>
+                            
+                        </div>
+
+                    </div>
+                </div>
+
+                <i class="iconMenu">
+                    <img src="https://rafaelalucas.com/dailyui/12/assets/menu.svg" alt="">
+                </i>
+            </div>
+        </nav>
+
+        <div class="content">
+
+            <section class="left">
+                <div class="swiper-container galleryMain ">
+                    <div class="swiper-wrapper">
+                    </div>
+
+                </div>
+                <!-- Add Arrows -->
+                <div class="sliderNavigation">
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </section>
+
+            <section class="right">
+                <div class="rightContent">
+                    <div class="model">
+                        <p class="modelTitle">{{ object.title }}</p>
+                        <p class="modelDesc">{{object.category}}</p>
+                    </div>
+
+
+                    <div class="price">
+                        <p class="priceFinal">$ {{ object.price }}</p>
+                        <p class="priceOriginal"></p>
+                    </div>
+
+                    <div class='description'>
+                      <p>{{object.content}}</p>
+                    </div>
+
+                    <div class="specs" style='position: absolute; display: none;'>
+                        <div class="size">
+                            <h3 class="subtitle">Size</h3>
+                            <div class="dropdown">
+                                <div class="form dropContent">
+                                    <p class="sizeNumber">40</p>
+                                    <i class="icon arrowDrop">
+                                        <img src="https://rafaelalucas.com/dailyui/12/assets/arrow-down.svg" alt="">
+                                    </i>
+                                </div>
+                                <div class="dropOpen">
+                                    <ul class="dropItems">
+                                        <li class="dropItem">38</li>
+                                        <li class="dropItem">39</li>
+                                        <li class="dropItem">40</li>
+                                        <li class="dropItem">41</li>
+                                        <li class="dropItem">42</li>
+                                        <li class="dropItem">43</li>
+                                        <li class="dropItem">44</li>
+                                        <li class="dropItem">45</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quantity">
+                            <h3 class="subtitle">Quantity</h3>
+                            <div class="form quantityCounter">
+                                <input class="inputQuantity" onKeyDown="return false" type="number" value="1" />
+
+                                <i class="icon btnQuantity minus">
+                                    <img src="https://rafaelalucas.com/dailyui/12/assets/minus.svg" alt="">
+                                </i>
+                                <i class="icon btnQuantity plus">
+                                    <img src="https://rafaelalucas.com/dailyui/12/assets/plus.svg" alt="">
+                                </i>
+                            </div>
+
+                      
+                        </div>
+                    </div>
+                    
+                    <div class="swiper-container galleryThumbs">
+                      <div class="swiper-wrapper">
+                      </div>
+                  </div>
+
+                  {% if object.author == user %}
+                    <div>
+                      <a class="btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                      <div>&nbsp</div>
+                      <a class="btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                    </div>
+                  {% endif %}
+                  <div class="btnContainer" >
+                      <button class="btn add" style='width:1px; height:1px; font-size: 1px; display: none;'>
+                          <img src="" alt="">
+                          Chat with seller</button>
+                  </div>
+                    
+
+                </div>
+                
+            </section>
+            <!-- Swiper -->
+
+        </div>
+
+    </div>
+    <script>
+
+      window.addEventListener("load", event => {
+      
+      function productHeading() {
+        
+          ////////////////
+          // Variables
+          ////////////////
+      
+          const product = {
+        value: 125,
+        images: [
+          {% for p in photos %}
+          { img: '{{ p.image.url }}' },
+          {% endfor %}
+        ]
+      };
+      
+          const btnAdd = document.querySelector('.btn.add'),
+              btnContainer = document.querySelector('.btnContainer'),
+              wrapper = document.querySelector('.wrapper'),
+              itemNumber = document.querySelector('.itemNumber'),
+              shoppingQuantity = document.querySelector('.shoppingQuantity'),
+              inputQuantity = document.querySelector('.inputQuantity'),
+              plus = document.querySelector('.plus'),
+              minus = document.querySelector('.minus'),
+              arrowDrop = document.querySelector('.arrowDrop'),
+              dropdown = document.querySelector('.dropdown'),
+              nav = document.querySelector('nav'),
+              error = document.querySelector('.error'),
+              shoppingIcon = document.querySelector('.shoppingIcon'),
+              shoppingMenu = document.querySelector('.shoppingMenu'),
+              emptyCart = document.querySelector('.emptyCart');
+      
+          let = priceFinal = document.querySelector('.priceFinal'),
+              priceOriginal = document.querySelector('.priceOriginal'),
+              discount = null,
+              sizeNumber = document.querySelector('.sizeNumber'),
+              dropItem = document.querySelectorAll('.dropItem'),
+              maxQuantity = 5,
+              newMaxQuantity = maxQuantity;
+      
+          ////////////////
+          // Events
+          ////////////////
+      
+          btnAdd.addEventListener('click', addItem);
+          plus.addEventListener("click", plusQuantity);
+          minus.addEventListener("click", minusQuantity);
+          arrowDrop.addEventListener("click", openDrop);
+          shoppingIcon.addEventListener("click", openShoppingCart);
+      
+          emptyCart.addEventListener("click", openShoppingCart);
+      
+          dropItem.forEach(function (el) {
+              el.addEventListener("click", getSize);
+          })
+      
+          window.addEventListener("resize", resize);
+      
+      
+          ////////////////
+          // Functions
+          //////////////// 
+      
+          // Fixed Nav 
+      
+          window.onscroll = function () {
+              if (window.pageYOffset >= 60) {
+                  nav.classList.add("fixed");
+              } else {
+                  nav.classList.remove("fixed");
+              }
+          };
+      
+          // Change button position on mobile
+      
+          function resize() {
+              //Button
+              if (window.innerHeight > wrapper.offsetHeight) {
+                  btnContainer.classList.remove('fixedBtn');
+              } else {
+                  btnContainer.classList.add('fixedBtn');
+              }
+          
+          }
+      
+          // Parallax
+      
+      
+          // Calculate the Discount
+      
+          // function getDisccount() {
+          //     priceOriginal.innerText = product.value + "$";
+          //     discount = product.value - (product.value * (30 / 100));
+          //     priceFinal.innerText = discount + "$";
+          // }
+      
+          // // Calculate the the Prices with discounts
+      
+          // function getPrice() {
+      
+          //     priceFinal.innerText = discount * inputQuantity.value + "€";
+          //     priceOriginal.innerText = product.value * inputQuantity.value + "€";
+      
+          //     setTimeout(() => {
+          //         priceFinal.classList.remove('anime');
+          //     }, 400);
+          // }
+      
+          // Update the prices with the quantity counter
+      
+          function plusQuantity() {
+              if (inputQuantity.value < maxQuantity) {
+                  inputQuantity.value == inputQuantity.value++;
+                  priceFinal.classList.add('anime');
+              }
+              getPrice();
+          }
+      
+          function minusQuantity() {
+              if (inputQuantity.value > 1) {
+                  inputQuantity.value == inputQuantity.value--;
+                  priceFinal.classList.add('anime');
+              }
+              getPrice();
+          }
+      
+          // Add items to shopping cart
+      
+          function addItem() {
+      
+              let cenas = parseInt(itemNumber.innerText) + parseInt(inputQuantity.value);
+      
+              if (cenas <= newMaxQuantity) {
+                  itemNumber.style.display = "flex";
+                  itemNumber.innerText = cenas;
+                  shoppingQuantity.innerText = "x" + cenas;
+                  itemNumber.classList.add("addItem");
+                  error.style.display = "none";
+              } else {
+                  error.style.display = "flex";
+              }
+      
+              setTimeout(() => {
+                  itemNumber.classList.remove("addItem");
+              }, 700);
+          }
+      
+          // Open Drop
+      
+          function openDrop() {
+              if (dropdown.classList.contains('open')) {
+                  dropdown.classList.remove('open');
+              } else {
+                  dropdown.classList.add('open');
+              }
+          }
+      
+          //get Drop Size Number Value 
+      
+          function getSize(e) {
+              sizeNumber.innerText = e.currentTarget.innerText;
+              openDrop();
+          }
+      
+          // Open Shopphing cart
+      
+          function openShoppingCart() {
+              if (itemNumber.innerText != "0") {
+                  if (shoppingMenu.classList.contains('openShopping')) {
+                      shoppingMenu.classList.remove('openShopping');
+                  } else {
+                      shoppingMenu.classList.add('openShopping');
+                  }
+              }
+          }
+      
+          //Clean Shopping Cart
+      
+          function cleanCart() {
+              shoppingMenu.classList.remove('openShopping');
+              itemNumber.style.display = "none";
+              itemNumber.classList.remove('addItem');
+              itemNumber.innerText = "0";
+          }
+      
+          // Populate the images for Swiper
+      
+          product.images.forEach(function (el) {
+      
+              let template = `
+                  <div class="swiper-slide">
+                      <div class="scene" data-hover-only="false"> 
+                          <img src="${el.img}" data-depth="0.5">
+                          <img src="${el.img}" data-depth="1" class="shadow">
+                      </div>
+                  </div>`;
+      
+              let template2 = `
+                  <div class="swiper-slide">
+                      <img src="${el.img}">
+                  </div>`;
+      
+              document.querySelector('.galleryMain .swiper-wrapper').insertAdjacentHTML('beforeend', template);
+              document.querySelector('.galleryThumbs .swiper-wrapper').insertAdjacentHTML('beforeend', template2);
+          });
+      
+      
+          // Make the slider function
+      
+          var galleryThumbs = new Swiper('.galleryThumbs', {
+              spaceBetween: 0,
+              slidesPerView: 'auto',
+              loop: false,
+              allowTouchMove: false,
+              allowSlidePrev: false,
+              allowSlideNext: false,
+      
+          });
+      
+          var galleryMain = new Swiper('.galleryMain', {
+              spaceBetween: 300,
+              speed: 500,
+              loop: true,
+              loopedSlides: 5, //looped slides should be the same
+              
+              navigation: {
+                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-button-prev',
+              },
+              pagination: {
+                  el: '.swiper-pagination',
+                  clickable: true,
+      
+              },
+              thumbs: {
+                  swiper: galleryThumbs,
+              },
+          });
+      
+          // Call functions 
+          getDisccount();
+          resize();
+      }
+      
+      productHeading();
+      });
+    </script>
+
+{% for item in related %}
+<h1>{{ item.title }}</h1>
+<img src="{{ item.author }}" alt="">
+{% endfor %}
+
+
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
+
+
+
+
+<!-- {% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<div class="grow">
+  <article class="media content-section">
+    <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+      <ol class="carousel-indicators">
+        {% for p in photos %}
+        <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+        {% endfor %}
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        {% for p in photos %}
+        <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
+          <img class="d-block w-100 img-fluid" src="{{p.image.url}}" alt="First slide">
+        </div>
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+        <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+        {% if object.author == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">{{ object.title }}</h2>
+      <p class="article-content">{{ object.content }}</p>
+
+      
+      <form action="{% url 'messages' %}" method='post'>
+        {% csrf_token %}
+        <input type="hidden" name="author_id" value="{{ object.author.id }}">
+        
+        <button type='submit'>message</button>
+      </form>
+        
+      
+
+
+      {% for item in related %}
+      <h1>{{ item.title }}</h1>
+      <h1>{{ item.content }}</h1>
+      {% endfor %}
+
+      
+    </div>
+  </article>
+</div> -->
+
+
+
+
+
+{% endblock content %}

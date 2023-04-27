@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Category</label>
+        <select id="category" name="category" class="form-control">
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Title</label>
+        <input type="text" id="title" name="title" class="form-control">
+
+        <label>Price</label>
+        <input type="number" id="price" name="price" class="form-control">
+
+        <label>Content</label>
+        <textarea id="content" name="content" class="form-control"></textarea>
+
+        <label>Images</label>
+        <input type="file" id="images" name="images[]" multiple>
+
+        <input type="hidden" id="length" name="length" value="0">
+
+        <button type="submit" id="saveBtn" class="btn btn-primary mt-4">Save</button>
+    </form>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- FilePond Stuff -->
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var files = [];
+      FilePond.registerPlugin(FilePondPluginFileValidateSize);
+      FilePond.registerPlugin(FilePondPluginFileValidateType);
+      FilePond.setOptions({
+        allowMultiple: true,
+        maxFiles: 10,
+        maxFileSize: '3MB'
+      });
+      
+      const inputElement = document.querySelector('#images');
+      const pond = FilePond.create(inputElement, {
+        acceptedFileTypes: ['image/png', 'image/jpeg'],
+        onaddfile: (err, fileItem) => {
+          if (!err) {
+            files.push(fileItem.file);
+          }
+          console.log(files);
+        },
+        onremovefile: (err, fileItem) => {
+          const index = files.indexOf(fileItem.file);
+          if (index > -1) {
+            files.splice(index, 1);
+          }
+          console.log(files);
+        }
+      });
+      
+      $(document).on('click', '#saveBtn', function(e) {
+        e.preventDefault();
+        var formData = new FormData();
+        formData.append('category', $('#category').val());
+        formData.append('title', $('#title').val());
+        formData.append('price', $('#price').val());
+        formData.append('content', $('#content').val());
+        
+        for (var i = 0; i < files.length; i++) {
+          formData.append('images[]', files[i]);
+        }
+        
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        
+        $.ajax({
+          type: 'POST',
+          url: '{% url "post-create" %}',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            console.log(response);
+            window.location.href = '/';
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr.responseText);
+          }
+        });
+      });
+    });
+  </script>
+  
+
+
+
+    
+</body>
+</html>
+
+
