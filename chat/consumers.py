@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 
 from chat.models import Thread, ChatMessage
 
-User = get_user_model()
 
 
 class ChatConsumer(AsyncConsumer):
@@ -84,6 +83,7 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def get_user_object(self, user_id):
+        User = get_user_model()
         qs = User.objects.filter(id=user_id)
         if qs.exists():
             obj = qs.first()
