@@ -4,8 +4,11 @@ from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
 
 from chat.models import Thread, ChatMessage
+from django.apps import apps
 
 
+Thread = apps.get_model('chat', 'Thread')
+ChatMessage = apps.get_model('chat', 'ChatMessage')
 
 class ChatConsumer(AsyncConsumer):
     async def websocket_connect(self, event):
