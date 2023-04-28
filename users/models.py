@@ -14,7 +14,7 @@ class Profile(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        image_read = storage.open(self.image.name, "r")
+        image_read = storage.open(self.image.name, "rb")
         img = Image.open(image_read)
 
         if img.height > 300 or img.width > 300:
