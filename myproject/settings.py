@@ -165,6 +165,20 @@ EMAIL_HOST_USER = 'boilersell.purdue@gmail.com'
 EMAIL_HOST_PASSWORD = "django-insecure-xo_c6zp)+2+w@%79d_s&9dm=2r^$*-+&ujm$0=1bfl5f0^63g-"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+
+
+AWS_ACCESS_KEY_ID = 'AKIAR7Z6MCUVBIJOXXWQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'boilersell'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'us-east-2'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
@@ -175,3 +189,5 @@ CHANNEL_LAYERS = {
 }
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
