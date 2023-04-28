@@ -19,6 +19,11 @@ class Profile(models.Model):
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
             img.thumbnail(output_size)
-            img.save(self.image.path)
+            from django.core.files.storage import default_storage as storage
+
+            fh = storage.open(self.image.name, "w")
+            format = 'png'  # You need to set the correct image format here
+            img.save(fh, format)
+            fh.close()
     
 
