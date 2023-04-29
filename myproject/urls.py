@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from users.views import register, profile, activate
+from users.views import register, profile, activate, verify
 from django.contrib.auth.views import (LoginView, LogoutView, 
                                        PasswordResetView, PasswordResetDoneView, 
                                        PasswordResetConfirmView, PasswordResetCompleteView)
@@ -12,6 +12,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('blog.urls')),
     path('register/', register, name='register'),
+    path('email-verify/', verify, name='email_verify'),
     path('login/', LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', profile, name='profile'),

@@ -63,7 +63,7 @@ def register(request):
             user.is_active=False
             user.save()
             activateEmail(request, user, form.cleaned_data.get('email'))
-            return redirect('/')
+            return redirect('email_verify')
 
         else:
             for error in list(form.errors.values()):
@@ -102,3 +102,7 @@ def profile(request):
     }
 
     return render(request, 'users/profile.html', context)
+
+
+def verify(request):
+    return render(request, 'users/email_verify.html')

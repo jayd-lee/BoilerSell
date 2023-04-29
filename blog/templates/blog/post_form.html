@@ -9,31 +9,43 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label>Category</label>
-        <select id="category" name="category" class="form-control">
-            {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
-            {% endfor %}
-        </select>
 
-        <label>Title</label>
-        <input type="text" id="title" name="title" class="form-control">
+  <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-8">
 
-        <label>Price</label>
-        <input type="number" id="price" name="price" class="form-control">
-
-        <label>Content</label>
-        <textarea id="content" name="content" class="form-control"></textarea>
-
-        <label>Images</label>
-        <input type="file" id="images" name="images[]" multiple>
-
-        <input type="hidden" id="length" name="length" value="0">
-
-        <button type="submit" id="saveBtn" class="btn btn-primary mt-4">Save</button>
-    </form>
+        <div class="content-section">
+          <form method="POST" enctype="multipart/form-data" instance="{{ object }}">
+              {% csrf_token %}
+              <label>Category</label>
+              <select id="category" name="category" class="form-control">
+                  {% for category in categories %}
+                      <option value="{{ category.id }}" {% if object.category == category %} selected {% endif %}>{{ category.name }}</option>
+                  {% endfor %}
+              </select>
+      
+              <label>Title</label>
+              <input type="text" id="title" name="title" class="form-control" value="{{ object.title }}">
+      
+              <label>Price</label>
+              <input type="number" id="price" name="price" class="form-control" value="{{ object.price }}">
+      
+              <label>Content</label>
+              <textarea id="content" name="content" class="form-control">{{ object.content }}</textarea>
+      
+              <label>Images</label>
+              <input type="file" id="images" name="images[]" multiple>
+      
+              <input type="hidden" id="length" name="length" value="0">
+      
+              <button type="submit" id="saveBtn" class="btn btn-primary mt-4">Save</button>
+          </form>
+      </div>
+      </div>
+  
+    </div>
+  </main>
+    
 
 
 

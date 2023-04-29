@@ -51,6 +51,10 @@ body {
   backdrop-filter: blur(5px);
 }
 
+.chevron{
+  margin: 40px 0 0 0;
+}
+
 .logo img {
   width: 55%;
   height: 55%;
@@ -73,12 +77,7 @@ body {
   letter-spacing: 0.8px;
   margin: 0 auto;
 }
-.wrapper .btnContainer {
-  width: 100%;
-  height: auto;
-  position: relative;
-  z-index: 3;
-}
+
 
 @media screen and (max-width: 799px) {
   .wrapper .btnContainer.fixedBtn {
@@ -142,11 +141,7 @@ body {
     transform: translateY(0px);
   }
 }
-@media screen and (max-width: 799px) {
-  .wrapper .btn {
-    width: 100%;
-  }
-}
+
 .wrapper nav {
   background-color: rgba(144, 144, 144, 0.1);
   display: flex;
@@ -177,7 +172,7 @@ body {
   width: 40%;
   display: flex;
   align-items: center;
-  padding: 0 60px;
+  padding: 0 15px;
   font-size: 28px;
   color: #FD6561;
   font-weight: 800;
@@ -185,7 +180,6 @@ body {
 @media screen and (max-width: 799px) {
   .wrapper nav .mainLogo {
     width: auto;
-    padding: 0 5vw;
     font-size: 20px;
   }
 }
@@ -578,7 +572,7 @@ body {
 
 
 .wrapper .content .right .rightContent .model {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 @media screen and (max-width: 799px) {
     .wrapper .content .right .rightContent .model {
@@ -1003,7 +997,7 @@ body {
 .galleryThumbs {
   height: auto;
   margin: 0;
-  margin: 30px;
+  margin: 30px 10px;
 }
 @media screen and (max-width: 799px) {
   .galleryThumbs {
@@ -1052,15 +1046,105 @@ body {
   border: 4px solid #FD6561;
 }
 
+.deletebutton {
+  background-color: rgba(223, 33, 33, 0.7); /* blue with 70% opacity */
+  color: white;
+  padding: 0.7vw 1.4vw; /* button padding */
+  border-radius: 5px; /* rounded corners */
+  border: none; /* remove button border */
+  cursor: pointer; /* cursor on hover */
+  text-decoration: none; /* remove underline */
+  display: inline-block; /* display as inline-block */
+
+}
+
+.deletebutton:hover {
+  background-color: rgb(163, 20, 20); /* blue with 100% opacity on hover */
+}
+
+.updatebutton {
+  background-color: rgba(28, 142, 195, 0.7); /* blue with 70% opacity */
+  color: white;
+  padding: 0.7vw 1.18vw; /* button padding */
+  border-radius: 5px; /* rounded corners */
+  border: none; /* remove button border */
+  cursor: pointer; /* cursor on hover */
+  text-decoration: none; /* remove underline */
+  display: inline-block; /* display as inline-block */
+
+
+  
+}
+
+.edit_buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 50px;
+
+}
+
+.updatebutton,
+.deletebutton {
+  color: white;
+  margin-right: 15px;
+}
+
+.updatebutton:hover {
+  background-color: rgb(17, 88, 132); /* blue with 100% opacity on hover */
+}
+
+
+
+
 .description{
     height: 20vh;
     overflow: hidden;
     overflow: auto;
     padding-bottom: 50px;
 }
+
+.message_button{
+  background: #25ccff;
+  box-shadow: 0px 10px 20px -5px rgba(97, 188, 253, 0.4);
+  padding: 18px 100px;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-family: "Barlow", sans-serif;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 799px) {
     .description{
         padding-bottom:0;
         height: 10vh;
     }
+    .chevron{
+      margin:2px;
+      transform: scale(0.7);
+    }
+    .mainLogo{
+      padding: 0;
+    }
+    .iconMenu img{
+      display: none;
+    }
+    
+    
+
+    .message_button{
+      padding: 18px 100px;
+    }
+   
+  
 }

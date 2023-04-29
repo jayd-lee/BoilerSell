@@ -2,11 +2,11 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import (about, 
                     PostListView, PostDetailView,
-                     PostUpdateView,
+                    
                     PostDeleteView, UserPostListView,
                     MarketListView, TicketListView,
                     RideListView, SubListView,
-                    FavListView, SettingsListView, search, create_post_view)
+                    FavListView, SettingsListView, search, create_post_view, update_view)
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
@@ -24,7 +24,7 @@ urlpatterns = [
     path('about/', about, name ='blog-about'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', create_post_view, name='post-create'),
-    path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
+    path('post/<int:pk>/update/<str:status>/', update_view, name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
 
     path('chat/', include('chat.urls')),

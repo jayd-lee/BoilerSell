@@ -2,6 +2,7 @@
 
 
 {% block content %}
+<div class="grow" style='margin-top:100px'>
     <div class='"content-section'>
         <form method='POST'> 
             {% csrf_token %}
@@ -19,5 +20,6 @@
 
         </form>
     </div>
+</div>
 
 {% endblock content %}
