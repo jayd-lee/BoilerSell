@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.urls import reverse_lazy,reverse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from django.views.generic import (
                             ListView, 
@@ -225,7 +226,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 
-
+@login_required
 def create_post_view(request):
     if request.method == 'POST':
         length = request.POST.get('length')
