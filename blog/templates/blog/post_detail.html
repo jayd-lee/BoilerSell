@@ -75,7 +75,7 @@
                               {% csrf_token %}
                               <input type="hidden" name="author_id" value="{{ object.author.id }}">
                               
-                              <button class="btn">Message Seller</button>
+                              <button class="btn">Message</button>
                             </form>
                             {% endif %}
                             {% endif %}
@@ -178,9 +178,9 @@
                   {% if object.author != user %}
                   <form action="{% url 'messages' %}" method='post'>
                     {% csrf_token %}
-                  <button class="message_button">
-                    Message Now
-                  </button>
+                    <input type="hidden" name="author_id" value="{{ object.author.id }}">
+                    
+                    <button class="btn">Message Seller</button>
                   </form>
                   {% endif %}
                   {% endif %}
