@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from blog.models import Post
 # Create your views here.
 from .models import Thread
 
-
+@csrf_exempt
 @login_required
 def messages_page(request):
 
