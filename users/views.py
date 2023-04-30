@@ -34,7 +34,7 @@ def activate(request, uidb64, token):
     else:
         messages.error(request, "Activation link is invalid!")
 
-    return redirect('blog-home')
+    return redirect('login')
 
 def activateEmail(request, user, to_email):
     mail_subject = "Activate your user account."

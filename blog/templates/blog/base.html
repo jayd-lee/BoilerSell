@@ -58,7 +58,7 @@
                         <button class='button' style='margin-top: 28px'>+ Create Post</button>
                     </a>
 
-                    {% if user.is_authenticated %}
+                    
                     
                     
                     <li class="relative">
@@ -75,6 +75,8 @@
                             dashboard
                         </a>
                     </li>
+
+                    {% if user.is_authenticated %}
                     <li class="relative">
                         {% block favorites %}
                         <a href="{% url 'favorites-home' %}" class="pl-4 flex items-center capitalize font-semibold  text-zinc-500">
@@ -91,6 +93,7 @@
                         </a>
                     </li>
                     
+                    {% endif %}
 
                     <li class="relative">
                         {% block market %}
@@ -154,7 +157,6 @@
                         </a>
                     </li>
                     
-                    {% endif %}
 
                     <!-- <li class="relative">
                         {% block settings %}
