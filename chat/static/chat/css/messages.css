@@ -2,8 +2,10 @@ body,
 html {
   height: 100%;
   margin: 0;
+  overflow: hidden;
   
 }
+
 
 .h-messages{
   height: 90vh;
@@ -42,6 +44,8 @@ html {
 .container {
   align-content: center;
 }
+
+
 .search {
   border-radius: 15px 0 0 15px !important;
   background-color: rgba(0, 0, 0, 0.3) !important;
@@ -255,3 +259,15 @@ html {
   height: 100%;
 }
 
+
+@media screen and (max-width: 799px) {
+  .contacts_card{
+      height: 38vh;
+  }
+  .h-100 {
+    height: 76%!important;
+}
+  .h-messages {
+    height: 63vh;
+  }
+}

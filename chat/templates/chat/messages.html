@@ -12,11 +12,43 @@
 
         <link rel="stylesheet" type="text/css" href="{% static 'chat/css/messages.css' %}">
 
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+           
+        
     </head>
 	<!--Coded With Love By Mutiullah Samim-->
 	<body>
+        <a href="{% url 'blog-home' %}" class="back-to-home">
+            <i class="fas fa-chevron-left"></i>
+          </a>
+          <style>
+            .back-to-home {
+              position: fixed;
+              top: 20px;
+              left: 20px;
+              font-size: 24px;
+              color: #007bff;
+              text-decoration: none;
+              z-index: 9999;
+            }
+          
+            .back-to-home:hover {
+              color: #0056b3;
+            }
+            @media screen and (max-width: 799px) {
+                .back-to-home{
+                    top: 0px;
+                    left:5px ;
+                    font-size: 24px;
+                }
+                
+                }
+          </style>
+
     {% if user.is_authenticated %}
-       
+
         <input type="hidden" id="logged-in-user" value="{{ user.id }}">
     {% endif %}
 		<div class="container-fluid h-messages">

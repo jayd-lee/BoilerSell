@@ -109,7 +109,12 @@ body {
 .card-header * {
   transition: 0.3s;
 }
-
+#id_description{
+  height: 10vh;
+}
+#hint_id_username{
+  display: none;
+}
 .card-cover {
   width: 100%;
   height: 100%;
