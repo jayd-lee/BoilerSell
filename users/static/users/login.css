@@ -553,3 +553,11 @@ input[type="password"]::placeholder {
   color: #999;
 }
 
+
+@media (max-width: 768px) {
+  
+  .crispy_form{
+      line-height: 1;
+  }
+  
+}

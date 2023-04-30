@@ -1162,6 +1162,9 @@ img,video {
     .boilersell-sidebar{
         display: none;
     }
+    .crispy_form{
+        line-height: 1;
+    }
     
 }
 
