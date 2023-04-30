@@ -37,6 +37,8 @@
               <input type="file" id="images" name="images[]" multiple>
       
               <input type="hidden" id="length" name="length" value="0">
+              <div id="progress-bar" style="background-color: #4CAF50; width: 0%; height: 20px;"></div>
+
       
               <button type="submit" id="saveBtn" class="btn btn-primary mt-4">Save</button>
           </form>
@@ -57,86 +59,114 @@
 <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
 <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+
+
 <script>
+    
+    
     document.addEventListener('DOMContentLoaded', function() {
-      var files = [];
-      FilePond.registerPlugin(FilePondPluginFileValidateSize);
-      FilePond.registerPlugin(FilePondPluginFileValidateType);
-      FilePond.setOptions({
-        allowMultiple: true,
-        maxFiles: 12,
-        maxFileSize: '4MB'
-      });
-      
-      const inputElement = document.querySelector('#images');
-      const pond = FilePond.create(inputElement, {
-        acceptedFileTypes: ['image/png', 'image/jpeg'],
-        onaddfile: (err, fileItem) => {
-        if (!err) {
-          let originalFile = fileItem.file;
-          let reader = new FileReader();
-          reader.onload = function(event) {
-            let img = new Image();
-            img.onload = function() {
-              let canvas = document.createElement('canvas');
-              let ctx = canvas.getContext('2d');
-              canvas.width = img.width;
-              canvas.height = img.height;
-              ctx.drawImage(img, 0, 0, img.width, img.height);
-              let desiredQuality = 0.5; // adjust this value to change the compression level
-              canvas.toBlob(function(blob) {
-                files.push(new File([blob], originalFile.name, {
-                  type: originalFile.type,
-                  lastModified: Date.now()
-                }));
-              }, originalFile.type, desiredQuality);
-            };
-            img.src = event.target.result;
+  var files = [];
+  var processing = 0; // track the number of images being processed
+  FilePond.registerPlugin(FilePondPluginFileValidateSize);
+  FilePond.registerPlugin(FilePondPluginFileValidateType);
+  FilePond.setOptions({
+    allowMultiple: true,
+    maxFiles: 12,
+    maxFileSize: '4MB'
+  });
+  
+  const inputElement = document.querySelector('#images');
+  const pond = FilePond.create(inputElement, {
+    acceptedFileTypes: ['image/png', 'image/jpeg'],
+    onaddfile: (err, fileItem) => {
+      processing++; // increment processing count
+      if (!err) {
+        let originalFile = fileItem.file;
+        let reader = new FileReader();
+        reader.onload = function(event) {
+          let img = new Image();
+          img.onload = function() {
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            let desiredQuality = originalFile.size > 1000000 ? 0.5 : 0.8; // adjust this value to change the compression level based on original file size
+            canvas.toBlob(function(blob) {
+              files.push(new File([blob], originalFile.name, {
+                type: originalFile.type,
+                lastModified: Date.now()
+              }));
+              processing--; // decrement processing count
+            }, originalFile.type, desiredQuality);
           };
-          reader.readAsDataURL(originalFile);
-        }
-        console.log(files);
-      },
-        onremovefile: (err, fileItem) => {
-          const index = files.indexOf(fileItem.file);
-          if (index > -1) {
-            files.splice(index, 1);
-          }
-          console.log(files);
-        }
-      });
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(originalFile);
+      }
+      console.log(files);
+    },
+    onremovefile: (err, fileItem) => {
+      const index = files.indexOf(fileItem.file);
+      if (index > -1) {
+        files.splice(index, 1);
+      }
+      console.log(files);
+    }
+  });
+  
+  $(document).on('click', '#saveBtn', function(e) {
+    e.preventDefault();
+    if(processing > 0) { // if images are still being processed
+      alert("Images are still processing. Please try again in a moment.");
+      return;
+    }
+    var formData = new FormData();
+    formData.append('category', $('#category').val());
+    formData.append('title', $('#title').val());
+    formData.append('price', $('#price').val());
+    formData.append('content', $('#content').val());
+    
+    for (var i = 0; i < files.length; i++) {
+      formData.append('images[]', files[i]);
+    }
+    
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+    
+    $.ajax({
+      type: 'POST',
+      url: '{% url "post-create" %}',
+      data: formData,
+      processData: false,
+      contentType: false,
+      xhr: function() { // Update to show upload progress
+  var xhr = $.ajaxSettings.xhr();
+  if (xhr.upload) {
+    xhr.upload.addEventListener('progress', function(e) {
+      if (e.lengthComputable) {
+        var percentComplete = e.loaded / e.total * 100;
+        console.log('Upload progress:', percentComplete, '%');
+        document.getElementById('progress-bar').style.width = percentComplete + '%';
+      }
+    }, false);
+  }
+  return xhr;
+},
       
-      $(document).on('click', '#saveBtn', function(e) {
-        e.preventDefault();
-        var formData = new FormData();
-        formData.append('category', $('#category').val());
-        formData.append('title', $('#title').val());
-        formData.append('price', $('#price').val());
-        formData.append('content', $('#content').val());
-        
-        for (var i = 0; i < files.length; i++) {
-          formData.append('images[]', files[i]);
-        }
-        
-        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-        
-        $.ajax({
-          type: 'POST',
-          url: '{% url "post-create" %}',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(response) {
-            console.log(response);
-            window.location.href = '/';
-          },
-          error: function(xhr, status, error) {
-            console.log(xhr.responseText);
-          }
-        });
-      });
+      success: function(response) {
+        console.log(response);
+        window.location.href = '/';
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr.responseText);
+      }
     });
+  });
+});
+
   </script>
+
+
   
 
 
