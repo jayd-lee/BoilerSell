@@ -27,6 +27,11 @@ def search(request):
     if query:
         posts = posts.filter(Q(title__icontains=query) | Q(content__icontains=query))
 
+    for post in posts:
+        cover_image = PostImage.objects.filter(post=post).first()
+        post.cover_image = cover_image
+
+
     return render(request, 'blog/sidebar/search.html', {
         'posts': posts,
         'query': query,
