@@ -294,43 +294,20 @@
 
         {% block content %}<div class ='grow'></div>{% endblock %}
 
-            <div class="p-2 md:w-72 shrink-0 md:sticky md:top-16 h-full third_flex">
-                <h2 class="text-xl text-black font-semibold">Top Users</h2>
+        <div class="p-2 md:w-72 shrink-0 md:sticky md:top-16 h-full third_flex">
+            <h2 class="text-xl text-black font-semibold">Top Users</h2>
+            <div class="overflow-auto" style="height: 300px;">  <!-- Scrollable div -->
                 <ul class="mt-3 space-y-3">
-
-                    
+                    {% for user in users %}
                     <li class="bg-zinc-800 rounded-md p-1 flex shadow-lg">
-                        <img src="default.png" class="w-12 h-12 rounded-md" alt=""/>
+                        <img src="{{user.profile.image.url}}" class="w-12 h-12 rounded-md" alt=""/>
                         <div class="ml-3">
-                            <p class="text-sm text-zinc-400">@raven</p>
+                            <p class="text-sm text-zinc-400">@{{ user.username }}</p>
                         </div>
                     </li>
-                    <li class="bg-zinc-800 rounded-md p-1 flex shadow-lg">
-                        <img src="" class="w-12 h-12 rounded-md" alt=""/>
-                        <div class="ml-3">
-                            <p class="text-sm text-zinc-400">@uriah</p>
-                        </div>
-                    </li>
-                    <li class="bg-zinc-800 rounded-md p-1 flex shadow-lg">
-                        <img src="" class="w-12 h-12 rounded-md" alt=""/>
-                        <div class="ml-3">
-                            <p class="text-sm text-zinc-400">@colin</p>
-                        </div>
-                    </li>
-                    <li class="bg-zinc-800 rounded-md p-1 flex shadow-lg">
-                        <img src="" class="w-12 h-12 rounded-md" alt=""/>
-                        <div class="ml-3">
-                            <p class="text-sm text-zinc-400">@emely</p>
-                        </div>
-                    </li>
-                    <li class="bg-zinc-800 rounded-md p-1 flex shadow-lg top_seller">
-                        <img src="" class="w-12 h-12 rounded-md" alt=""/>
-                        <div class="ml-3">
-                            <p class="text-sm text-zinc-400">@raphael</p>
-                        </div>
-                    </li>
-                    
+                    {% endfor %}
                 </ul>
+            </div>
                 <div class="w-full rounded-md bg-gradient-to-tr from-fuchsia-600 to-violet-600 mt-3 p-3 relative overflow-hidden">
                     
                     
