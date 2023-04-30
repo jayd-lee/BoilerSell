@@ -260,23 +260,19 @@
 
                 <div class="flex  mt-search md:mt-0 order-3 md:order-2 w-full grow md:w-fit searchbar">
                     <button id='hamburger' class="w-10 h-10 rounded-md bg-zinc-500 grid place-items-center mr-2 block md:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                      </svg>
                     </button>
                     <form class="relative grow md:max-w-lg " action="{% url 'search' %}" method='get'>
-                        <input type="text" name="query" class="bg-zinc-800 pl-3 pr-10 h-10 rounded-md w-full" placeholder="Search for an item">
-                        <button type="submit" class="absolute right-0 top-0 bottom-0 w-10 grid place-items-center">
-                            <svg  xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#BEBEBE">
-                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                            </svg>
-                            
-                            
-                        </button>
+                      <input type="text" name="query" class="bg-zinc-800 pl-3 pr-10 h-10 rounded-md w-full" style="color: black;" placeholder="Search for an item">
+                      <button type="submit" class="absolute right-0 top-0 bottom-0 w-10 grid place-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="#BEBEBE">
+                          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                        </svg>
+                      </button>
                     </form>
-
-            
-                </div>
+                  </div>
 
                 
             </div>
@@ -305,10 +301,13 @@
                 <ul class="mt-3 space-y-3">
                     {% for user in users %}
                     <li class="bg-zinc-800 rounded-md p-1 flex shadow-lg" style='border: 1px solid gray'>
+                        <a class="mr-2" href="{% url 'user-posts' user.username %}">
                         <img src="{{user.profile.image.url}}" class="w-12 h-12 rounded-md" alt=""/>
+                        
                         <div class="ml-3">
                             <p class="text-sm text-zinc-400">@{{ user.username }}</p>
                         </div>
+                        </a>
                     </li>
                     {% endfor %}
                 </ul>
