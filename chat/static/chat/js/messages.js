@@ -137,3 +137,36 @@ function get_active_thread_id(){
     return thread_id
 }
 
+$(document).ready(function() {
+    // Add event listener to the "Message Seller" button
+    $("form").submit(function(event) {
+        // Prevent the form from submitting synchronously
+        event.preventDefault();
+        
+        // Get the form data
+        var formData = {
+            'author_id' : $('input[name=author_id]').val()
+        };
+        
+        // Send an Ajax request to the server
+        $.ajax({
+            type: 'POST',
+            url: '{% url "messages" %}',
+            data: formData,
+            dataType: 'json',
+            encode: true
+        })
+        
+        // Success function, handle server response
+        .done(function(data) {
+            console.log(data);
+            // Update the DOM or perform other actions
+        })
+        
+        // Failure function, handle errors
+        .fail(function(data) {
+            console.log(data);
+            // Handle errors
+        });
+    });
+});

@@ -112,6 +112,7 @@
                     <div class="model">
                         <p class="modelTitle">{{ object.title }}</p>
                         <p class="modelDesc">{{object.category}}</p>
+                        
                     </div>
 
                     
@@ -119,12 +120,15 @@
 
                     <div class="price">
                         <p class="priceFinal">$ {{ object.price }}</p>
+                        
                         <p class="priceOriginal"></p>
                     </div>
 
                     <div class='description'>
                       <p>{{object.content}}</p>
+                      
                     </div>
+                    <p class="modelDesc">Posted by @{{ object.author.username }}</p>
 
                     <div class="specs" style='position: absolute; display: none;'>
                         <div class="size">
