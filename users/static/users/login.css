@@ -354,7 +354,7 @@ a:focus {
 }
 
 .crispy_form{
-  line-height: 0.2;
+  line-height: 1;
 }
 /*--------------------*/
 /* 05. Responsive CSS */
