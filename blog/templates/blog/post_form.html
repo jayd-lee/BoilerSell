@@ -72,11 +72,31 @@
       const pond = FilePond.create(inputElement, {
         acceptedFileTypes: ['image/png', 'image/jpeg'],
         onaddfile: (err, fileItem) => {
-          if (!err) {
-            files.push(fileItem.file);
-          }
-          console.log(files);
-        },
+        if (!err) {
+          let originalFile = fileItem.file;
+          let reader = new FileReader();
+          reader.onload = function(event) {
+            let img = new Image();
+            img.onload = function() {
+              let canvas = document.createElement('canvas');
+              let ctx = canvas.getContext('2d');
+              canvas.width = img.width;
+              canvas.height = img.height;
+              ctx.drawImage(img, 0, 0, img.width, img.height);
+              let desiredQuality = 0.8; // adjust this value to change the compression level
+              canvas.toBlob(function(blob) {
+                files.push(new File([blob], originalFile.name, {
+                  type: originalFile.type,
+                  lastModified: Date.now()
+                }));
+              }, originalFile.type, desiredQuality);
+            };
+            img.src = event.target.result;
+          };
+          reader.readAsDataURL(originalFile);
+        }
+        console.log(files);
+      },
         onremovefile: (err, fileItem) => {
           const index = files.indexOf(fileItem.file);
           if (index > -1) {
