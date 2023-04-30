@@ -87,7 +87,7 @@ ASGI_APPLICATION = 'myproject.asgi.application'
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
 
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
