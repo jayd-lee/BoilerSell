@@ -23,14 +23,11 @@
 	<body>
         <style>
             .back-to-home {
-              position: fixed;
-              top: 20px;
-              left: 20px;
-              font-size: 24px;
-              color: #007bff;
-              text-decoration: none;
-              z-index: 9999;
-            }
+            font-size: 24px;
+            color: #007bff;
+            text-decoration: none;
+            z-index: 9999;
+        }
           
             .back-to-home:hover {
               color: #0056b3;
@@ -43,11 +40,29 @@
                 }
                 
                 }
+                @media screen and (min-width: 799px) {
+                .container-fluid .emailspan{
+                   margin-left: 3.5vw;
+                    
+                }
+                
+                }
           </style>
-        <a href="{% url 'blog-home' %}" class="back-to-home">
-            <i class="fas fa-chevron-left"></i>
-          </a>
-          
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-2">
+                    <a href="{% url 'blog-home' %}" class="back-to-home">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </div>
+                <div class="col-8 text-center">
+                    <span class='emailspan'>Emails will be sent to users who have new messages</span>
+                </div>
+                <div class="col-2">
+                    <!-- Empty div for maintaining symmetry -->
+                </div>
+            </div>
+        </div>
 
     {% if user.is_authenticated %}
 

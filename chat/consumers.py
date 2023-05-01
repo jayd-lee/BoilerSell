@@ -3,6 +3,7 @@ from channels.consumer import AsyncConsumer
 from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
 from django.apps import apps
+from django.core.mail import send_mail
 
 class ChatConsumer(AsyncConsumer):
     async def websocket_connect(self, event):
@@ -102,5 +103,33 @@ class ChatConsumer(AsyncConsumer):
     @database_sync_to_async
     def create_chat_message(self, thread, user, msg):
         ChatMessage = apps.get_model('chat', 'ChatMessage')
+        chat_message = ChatMessage.objects.create(thread=thread, user=user, message=msg)
+        
+        email_subject = 'Marketplace Name: New Message Received'
+        email_content = f"""Hello,
 
-        ChatMessage.objects.create(thread=thread, user=user, message=msg)
+    You have received a new message on Marketplace Name from {user.username}. Here's the message:
+
+    "{msg}"
+
+    To respond, please log in to your account and visit the Messages section.
+
+    Please do not reply to this email, as it is an automated notification.
+
+    Good luck for finals week!
+    Boiler Up!
+    """
+
+        from_email = 'boilersell.purdue@gmail.com'
+        recipient_email = [thread.second_person.email]  # assuming the second person is the recipient
+
+        send_mail(
+            email_subject,
+            email_content,
+            from_email,
+            recipient_email,
+            fail_silently=False,
+        )
+
+        return chat_message
+
