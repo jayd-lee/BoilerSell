@@ -108,7 +108,7 @@ class ChatConsumer(AsyncConsumer):
         email_subject = 'Marketplace Name: New Message Received'
         email_content = f"""Hello,
 
-    You have received a new message on Marketplace Name from @{user.username}. Here's the message:
+    You have received a new message on BoilerSell.com from @{user.username}. Here's the message:
 
     "{msg}"
 
