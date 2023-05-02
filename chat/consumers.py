@@ -105,12 +105,12 @@ class ChatConsumer(AsyncConsumer):
         ChatMessage = apps.get_model('chat', 'ChatMessage')
         chat_message = ChatMessage.objects.create(thread=thread, user=user, message=msg)
         
-        email_subject = 'Marketplace Name: New Message Received'
+        email_subject = 'BoilerSell: New Message Received'
         email_content = f"""Hello,
 
     You have received a new message on BoilerSell.com from @{user.username}. Here's the message:
 
-    "{msg}"
+        "{msg}"
 
     To respond, please log in to your account and visit the Messages section.
 
@@ -121,13 +121,13 @@ class ChatConsumer(AsyncConsumer):
     """
 
         from_email = 'boilersell.purdue@gmail.com'
-        recipient_email = [thread.second_person.email]  # assuming the second person is the recipient
+        recipient_email = thread.second_person.email if thread.first_person == user else thread.first_person.email  # check who the recipient is
 
         send_mail(
             email_subject,
             email_content,
             from_email,
-            recipient_email,
+            [recipient_email],
             fail_silently=False,
         )
 
