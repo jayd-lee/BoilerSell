@@ -99,37 +99,82 @@ class ChatConsumer(AsyncConsumer):
         else:
             obj = None
         return obj
+    
 
     @database_sync_to_async
-    def create_chat_message(self, thread, user, msg):
+    def create_chat_message(self, thread_obj, user, message):
+
         ChatMessage = apps.get_model('chat', 'ChatMessage')
-        chat_message = ChatMessage.objects.create(thread=thread, user=user, message=msg)
-        
-        email_subject = 'BoilerSell: New Message Received'
-        email_content = f"""Hello,
+        chat_message = ChatMessage.objects.create(thread=thread_obj, user=user, message=message)
 
-    You have received a new message on BoilerSell.com from @{user.username}. Here's the message:
+        if thread_obj.first_person == user:
+            send_to_user = thread_obj.second_person
 
-        "{msg}"
+        elif thread_obj.second_person == user:
+            send_to_user = thread_obj.first_person
 
-    To respond, please log in to your account and visit the Messages section.
+        # chat_message = ChatMessage.objects.create(
+        #     thread=thread_obj,
+        #     user=user,
+        #     message=message
+        # )
 
-    Please do not reply to this email, as it is an automated notification.
+        message_subject = 'BoilerSell: New Message Received'
+        message_body = f"""Hello,
 
-    Good luck for finals week!
-    Boiler Up!
-    """
+You have received a new message on BoilerSell.com from @{user.username}. Here's the message:
 
-        from_email = 'boilersell.purdue@gmail.com'
-        recipient_email = thread.second_person.email if thread.first_person == user else thread.first_person.email  # check who the recipient is
+    "{message}"
+
+To respond, please log in to your account and visit the Messages section.
+
+Please do not reply to this email, as it is an automated notification.
+
+Good luck for finals week!
+Boiler Up!
+"""
 
         send_mail(
-            email_subject,
-            email_content,
-            from_email,
-            [recipient_email],
-            fail_silently=False,
+            subject=message_subject,
+            message=message_body,
+            from_email=None,
+            recipient_list=[send_to_user.email],
+            fail_silently=True,
         )
 
         return chat_message
 
+    # @database_sync_to_async
+    # def create_chat_message(self, thread, user, msg):
+    #     ChatMessage = apps.get_model('chat', 'ChatMessage')
+    #     chat_message = ChatMessage.objects.create(thread=thread, user=user, message=msg)
+        
+    #     email_subject = 'BoilerSell: New Message Received'
+    #     email_content = f"""Hello,
+
+    # You have received a new message on BoilerSell.com from @{user.username}. Here's the message:
+
+    #     "{msg}"
+
+    # To respond, please log in to your account and visit the Messages section.
+
+    # Please do not reply to this email, as it is an automated notification.
+
+    # Good luck for finals week!
+    # Boiler Up!
+    # """
+
+    #     from_email = 'boilersell.purdue@gmail.com'
+    #     recipient_email = thread.second_person.email if thread.first_person == user else thread.first_person.email  # check who the recipient is
+
+    #     send_mail(
+    #         email_subject,
+    #         email_content,
+    #         from_email,
+    #         [recipient_email],
+    #         fail_silently=False,
+    #     )
+
+    #     return chat_message
+
+    
