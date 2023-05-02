@@ -64,7 +64,7 @@ class MarketListView(ListView):
     model = Post
     template_name ='blog/sidebar/market.html'
     context_object_name = 'posts'
-    ordering = ['-date_posted']
+    ordering = ['is_sold', '-date_posted']
     paginate_by = 20
 
     def get_queryset(self):
@@ -87,7 +87,7 @@ class TicketListView(ListView):
     model = Post
     template_name ='blog/sidebar/ticket.html'
     context_object_name = 'posts'
-    ordering = ['-date_posted']
+    ordering = ['is_sold', '-date_posted']
     paginate_by = 20
 
     def get_queryset(self):
@@ -109,7 +109,7 @@ class RideListView(ListView):
     model = Post
     template_name ='blog/sidebar/rideshare.html'
     context_object_name = 'posts'
-    ordering = ['-date_posted']
+    ordering = ['is_sold', '-date_posted']
     paginate_by = 20
 
     def get_queryset(self):
@@ -131,7 +131,7 @@ class SubListView(ListView):
     model = Post
     template_name ='blog/sidebar/sublease.html'
     context_object_name = 'posts'
-    ordering = ['-date_posted']
+    ordering = ['is_sold', '-date_posted']
     paginate_by = 20
 
     def get_queryset(self):
@@ -153,7 +153,7 @@ class FavListView(ListView):
     model = Post
     template_name ='blog/sidebar/fav.html'
     context_object_name = 'posts'
-    ordering = ['-date_posted']
+    ordering = ['is_sold', '-date_posted']
     paginate_by = 20
 
     def get_queryset(self):
@@ -179,7 +179,7 @@ class SettingsListView(ListView):
     model = Post
     template_name ='blog/sidebar/settings.html'
     context_object_name = 'posts'
-    ordering = ['-date_posted']
+    ordering = ['is_sold', '-date_posted']
     paginate_by = 20
 
 

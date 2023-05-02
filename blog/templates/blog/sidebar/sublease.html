@@ -11,83 +11,85 @@
 
 {% block content %}
     
-    <div class=" grow calc" >
-        <div class="dashboard_ad">
-            
-            
-            <div class="flex flex-col md:flex-row justify-between px-3 mt-3">
-                <h2 class="text-xl text-black font-semibold">Sublease</h2>
-                <ul class="inline-flex space-x-3 ">
-                    <!-- <li class="">
-                        <button class=" text-fuchsia-600 underline font-bold">Art</button>
-                    </li>
-                    <li class="">
-                        <button class=" text-zinc-500">Collectables</button>
-                    </li>
-                    <li class="">
-                        <button class=" text-zinc-500">Music</button>
-                    </li>
-                    <li class="">
-                        <button class=" text-zinc-500">Sport</button>
-                    </li> -->
-                </ul>
-            </div>
+{% block content %}
+    
+<div class=" grow calc" >
+    <div class="dashboard_ad">
+        
+        
+        <div class="flex flex-col md:flex-row justify-between px-3 mt-3">
+            <h2 class="text-xl text-black font-semibold">Sublease</h2>
+            <ul class="inline-flex space-x-3 ">
+                <!-- <li class="">
+                    <button class=" text-fuchsia-600 underline font-bold">Art</button>
+                </li>
+                <li class="">
+                    <button class=" text-zinc-500">Collectables</button>
+                </li>
+                <li class="">
+                    <button class=" text-zinc-500">Music</button>
+                </li>
+                <li class="">
+                    <button class=" text-zinc-500">Sport</button>
+                </li> -->
+            </ul>
         </div>
-        <div class='post_wrapper'>
-        <ul class="p-1.5 flex flex-wrap">
+    </div>
+    <div class='post_wrapper'>
+    <ul class="p-1.5 flex flex-wrap">
 
-          {% for post in posts %}
-          <li class="w-full lg:w-1/2 xl:w-1/3  p-1.5">
-              <a class="block rounded-md w-full overflow-hidden pb-4 text-black" href="{% url 'post-detail' post.id %}">
-                  <div class="w-full h-50 bg-center bg-cover relative rounded-md item_pics" style="background-image:url( {{post.cover_image.image.url}} )">
-      
-                      {% if post.is_sold %}
-                      <img class="absolute top-0 left-0 w-full h-full object-cover background-color: rgba(19, 18, 18, 0.611);" src="https://cdntest.bridge909.org/images/sold-out.png" alt="Sold Out">
-                      {% endif %}
-      
-                  </div>
-                  <div class=" px-3 mt-2">
-                      <p class='text-xl font-semibold post_price'>${{post.price}}</p>
-                      <p class='text-lg post_title'>{{ post.title }}</p>
-      
-                      {% load humanize %}
-      
-                      <p class="text-zinc-500 text-sm post_ago">{{ post.date_posted|naturaltime }}</p>
-                  </div>
-              </a>
-          </li>
-      {% endfor %}
-      
-
-            
-          </ul>
-        </div>
+      {% for post in posts %}
+      <li class="w-full lg:w-1/2 xl:w-1/3  p-1.5">
+          <a class="block rounded-md w-full overflow-hidden pb-4 text-black" href="{% url 'post-detail' post.id %}">
+              <div class="w-full h-50 bg-center bg-cover relative rounded-md item_pics" style="background-image:url( {{post.cover_image.image.url}} )">
+  
+                  {% if post.is_sold %}
+                  <img class="absolute top-0 left-0 w-full h-full object-cover background-color: rgba(19, 18, 18, 0.611);" src="https://cdntest.bridge909.org/images/sold-out.png" alt="Sold Out">
+                  {% endif %}
+  
+              </div>
+              <div class=" px-3 mt-2">
+                  <p class='text-xl font-semibold post_price'>${{post.price}}</p>
+                  <p class='text-lg post_title'>{{ post.title }}</p>
+  
+                  {% load humanize %}
+  
+                  <p class="text-zinc-500 text-sm post_ago">{{ post.date_posted|naturaltime }}</p>
+              </div>
+          </a>
+      </li>
+  {% endfor %}
+  
 
         
-        {% if is_paginated %}
-
-      {% if page_obj.has_previous %}
-        <a class="first_button" href="?page=1">First</a>
-        <a class="previous_button" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-      {% endif %}
-
-      {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-          <a class="page_number" href="?page={{ num }}">{{ num }}</a>
-        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'2' %}
-          <a class="page_number" href="?page={{ num }}">{{ num }}</a>
-        {% endif %}
-      {% endfor %}
-
-      {% if page_obj.has_next %}
-        <a class="next_button" href="?page={{ page_obj.next_page_number }}">Next</a>
-      {% endif %}
-
-    {% endif %}
+      </ul>
     </div>
 
-
     
+    {% if is_paginated %}
+
+  {% if page_obj.has_previous %}
+    <a class="first_button" href="?page=1">First</a>
+    <a class="previous_button" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+      <a class="page_number" href="?page={{ num }}">{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'2' %}
+      <a class="page_number" href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+    <a class="next_button" href="?page={{ page_obj.next_page_number }}">Next</a>
+  {% endif %}
+
+{% endif %}
+</div>
+
+
+
 
 
 
