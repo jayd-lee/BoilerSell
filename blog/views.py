@@ -44,7 +44,7 @@ class PostListView(ListView):
     template_name ='blog/shop.html'
     context_object_name = 'posts'
     ordering = ['is_sold', '-date_posted']
-    paginate_by = 20
+    paginate_by = 24
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -65,7 +65,7 @@ class MarketListView(ListView):
     template_name ='blog/sidebar/market.html'
     context_object_name = 'posts'
     ordering = ['is_sold', '-date_posted']
-    paginate_by = 20
+    paginate_by = 24
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -88,7 +88,7 @@ class TicketListView(ListView):
     template_name ='blog/sidebar/ticket.html'
     context_object_name = 'posts'
     ordering = ['is_sold', '-date_posted']
-    paginate_by = 20
+    paginate_by = 24
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -110,7 +110,7 @@ class RideListView(ListView):
     template_name ='blog/sidebar/rideshare.html'
     context_object_name = 'posts'
     ordering = ['is_sold', '-date_posted']
-    paginate_by = 20
+    paginate_by = 24
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -132,7 +132,7 @@ class SubListView(ListView):
     template_name ='blog/sidebar/sublease.html'
     context_object_name = 'posts'
     ordering = ['is_sold', '-date_posted']
-    paginate_by = 20
+    paginate_by = 24
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -154,7 +154,7 @@ class FavListView(ListView):
     template_name ='blog/sidebar/fav.html'
     context_object_name = 'posts'
     ordering = ['is_sold', '-date_posted']
-    paginate_by = 20
+    paginate_by = 24
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -180,10 +180,7 @@ class SettingsListView(ListView):
     template_name ='blog/sidebar/settings.html'
     context_object_name = 'posts'
     ordering = ['is_sold', '-date_posted']
-    paginate_by = 20
-
-
-
+    paginate_by = 24
 
 
 
@@ -191,7 +188,7 @@ class UserPostListView(ListView):
     model = Post
     template_name ='blog/user_posts.html'
     context_object_name = 'posts'
-    paginate_by = 5
+    paginate_by = 4
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
