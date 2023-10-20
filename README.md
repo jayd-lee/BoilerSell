@@ -1,1 +1,1 @@
-# Old version written in Django. New code is private at the moment... sorry
+# Old version written in Django. New code is in TS React and NestJS!!
